@@ -1,8 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Column, Entity, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Role } from "./role.entity";
-import { Wallet } from "./wallet.entity";
 import { Room } from "../../rooms/entities/room.entity";
+import { Wallet } from "../../wallets/entities/wallet.entity";
 
 @Entity("users")
 export class User {
@@ -27,15 +27,21 @@ export class User {
   name: string;
 
   @ApiProperty({ type: () => [Role], required: false })
-  @ManyToMany(() => Role, (role) => role.users)
+  @ManyToMany(() => Role, (role) => role.users, {
+    eager: true,
+  })
   @JoinTable()
   roles: Role[];
 
   @ApiProperty({ type: () => Wallet, required: false })
-  @OneToOne(() => Wallet, (wallet) => wallet.user)
+  @OneToOne(() => Wallet, (wallet) => wallet.user, {
+    eager: true,
+  })
   wallet: Wallet;
 
   @ApiProperty({ isArray: true, required: false })
-  @ManyToMany(() => Room, (room) => room.users)
-  rooms: Room[];
+  @ManyToMany(() => Room, (room) => room.users, {
+    lazy: true,
+  })
+  rooms: Promise<Room[]>;
 }

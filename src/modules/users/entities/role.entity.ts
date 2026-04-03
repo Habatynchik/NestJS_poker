@@ -13,6 +13,8 @@ export class Role {
   name: string;
 
   @ApiProperty({ type: () => [User], required: false })
-  @ManyToMany(() => User, (user) => user.roles)
-  users: User[];
+  @ManyToMany(() => User, (user) => user.roles, {
+    lazy: true,
+  })
+  users: Promise<User[]>;
 }

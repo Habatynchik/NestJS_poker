@@ -6,13 +6,7 @@ import { AuthModule } from "./modules/auth/auth.module";
 import { WalletsModule } from "./modules/wallets/wallets.module";
 
 @Module({
-  imports: [
-    DatabaseModule,
-    UsersModule,
-    RoomsModule,
-    AuthModule,
-    WalletsModule,
-  ],
+  imports: [DatabaseModule, UsersModule, RoomsModule, AuthModule, WalletsModule],
   controllers: [],
   providers: [],
 })

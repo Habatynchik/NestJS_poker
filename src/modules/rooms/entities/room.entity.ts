@@ -21,7 +21,9 @@ export class Room {
   @Column({ default: true })
   isActive: boolean;
 
-  @ManyToMany(() => User, (user) => user.rooms)
   @JoinTable()
+  @ManyToMany(() => User, (user) => user.rooms, {
+    eager: true,
+  })
   users: User[];
 }
